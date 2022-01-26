@@ -1,0 +1,13 @@
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: /Volumes/THKAILAR/Cours/S8/Moteur3D/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_ab599/fast && /Library/Developer/CommandLineTools/usr/bin/make  -f CMakeFiles/cmTC_ab599.dir/build.make CMakeFiles/cmTC_ab599.dir/build
+Building CXX object CMakeFiles/cmTC_ab599.dir/src.cxx.o
+/Library/Developer/CommandLineTools/usr/bin/c++ -Dflag_supported  -Wall -Wextra -pedantic -std=c++14 -O3  -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk   -fopenmp -MD -MT CMakeFiles/cmTC_ab599.dir/src.cxx.o -MF CMakeFiles/cmTC_ab599.dir/src.cxx.o.d -o CMakeFiles/cmTC_ab599.dir/src.cxx.o -c /Volumes/THKAILAR/Cours/S8/Moteur3D/build/CMakeFiles/CMakeTmp/src.cxx
+clang: error: unsupported option '-fopenmp'
+make[1]: *** [CMakeFiles/cmTC_ab599.dir/src.cxx.o] Error 1
+make: *** [cmTC_ab599/fast] Error 2
+
+
+Source file was:
+int main() { return 0; }

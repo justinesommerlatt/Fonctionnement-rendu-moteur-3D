@@ -1,0 +1,3 @@
+/Volumes/THKAILAR/Cours/S8/Moteur3D/build/CMakeFiles/tinyrenderer.dir
+/Volumes/THKAILAR/Cours/S8/Moteur3D/build/CMakeFiles/edit_cache.dir
+/Volumes/THKAILAR/Cours/S8/Moteur3D/build/CMakeFiles/rebuild_cache.dir
