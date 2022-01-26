@@ -1,0 +1,260 @@
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: D:/COURS/Moteur 3D/perso/out/build/x64-Release/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_515a9 && [1/2] Building CXX object CMakeFiles\cmTC_515a9.dir\src.cxx.obj
+FAILED: CMakeFiles/cmTC_515a9.dir/src.cxx.obj 
+C:\PROGRA~1\MICROS~4\2022\COMMUN~1\VC\Tools\MSVC\1430~1.307\bin\Hostx64\x64\cl.exe  /nologo /TP -Dflag_supported  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wall  /MDd /Zi /Ob0 /Od /RTC1   -Wextra /showIncludes /FoCMakeFiles\cmTC_515a9.dir\src.cxx.obj /FdCMakeFiles\cmTC_515a9.dir\ /FS -c "D:\COURS\Moteur 3D\perso\out\build\x64-Release\CMakeFiles\CMakeTmp\src.cxx"
+cl : Ligne de commande error D8021 : argument numérique non valide '/Wextra'
+ninja: build stopped: subcommand failed.
+
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: D:/COURS/Moteur 3D/perso/out/build/x64-Release/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_094a5 && [1/2] Building CXX object CMakeFiles\cmTC_094a5.dir\src.cxx.obj
+cl : Ligne de commande warning D9002 : option '-pedantic' inconnue ignorée
+[2/2] Linking CXX executable cmTC_094a5.exe
+
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: D:/COURS/Moteur 3D/perso/out/build/x64-Release/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_e16d2 && [1/2] Building CXX object CMakeFiles\cmTC_e16d2.dir\src.cxx.obj
+cl : Ligne de commande warning D9002 : option '-std=c++14' inconnue ignorée
+[2/2] Linking CXX executable cmTC_e16d2.exe
+
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: D:/COURS/Moteur 3D/perso/out/build/x64-Release/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_56d83 && [1/2] Building CXX object CMakeFiles\cmTC_56d83.dir\src.cxx.obj
+cl : Ligne de commande warning D9002 : option '-O3' inconnue ignorée
+[2/2] Linking CXX executable cmTC_56d83.exe
+
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: D:/COURS/Moteur 3D/perso/out/build/x64-Release/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_5f481 && [1/2] Building CXX object CMakeFiles\cmTC_5f481.dir\src.cxx.obj
+cl : Ligne de commande warning D9002 : option '-fopenmp' inconnue ignorée
+[2/2] Linking CXX executable cmTC_5f481.exe
+
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: D:/COURS/Moteur 3D/perso/out/build/x64-Release/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_0909a && [1/2] Building CXX object CMakeFiles\cmTC_0909a.dir\src.cxx.obj
+FAILED: CMakeFiles/cmTC_0909a.dir/src.cxx.obj 
+C:\PROGRA~1\MICROS~4\2022\COMMUN~1\VC\Tools\MSVC\1430~1.307\bin\Hostx64\x64\cl.exe  /nologo /TP -Dflag_supported  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wall  /MDd /Zi /Ob0 /Od /RTC1   -Wextra /showIncludes /FoCMakeFiles\cmTC_0909a.dir\src.cxx.obj /FdCMakeFiles\cmTC_0909a.dir\ /FS -c "D:\COURS\Moteur 3D\perso\out\build\x64-Release\CMakeFiles\CMakeTmp\src.cxx"
+cl : Ligne de commande error D8021 : argument numérique non valide '/Wextra'
+ninja: build stopped: subcommand failed.
+
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: D:/COURS/Moteur 3D/perso/out/build/x64-Release/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_545f1 && [1/2] Building CXX object CMakeFiles\cmTC_545f1.dir\src.cxx.obj
+cl : Ligne de commande warning D9002 : option '-pedantic' inconnue ignorée
+[2/2] Linking CXX executable cmTC_545f1.exe
+
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: D:/COURS/Moteur 3D/perso/out/build/x64-Release/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_45e7a && [1/2] Building CXX object CMakeFiles\cmTC_45e7a.dir\src.cxx.obj
+cl : Ligne de commande warning D9002 : option '-std=c++14' inconnue ignorée
+[2/2] Linking CXX executable cmTC_45e7a.exe
+
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: D:/COURS/Moteur 3D/perso/out/build/x64-Release/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_bcf50 && [1/2] Building CXX object CMakeFiles\cmTC_bcf50.dir\src.cxx.obj
+cl : Ligne de commande warning D9002 : option '-O3' inconnue ignorée
+[2/2] Linking CXX executable cmTC_bcf50.exe
+
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: D:/COURS/Moteur 3D/perso/out/build/x64-Release/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_d7712 && [1/2] Building CXX object CMakeFiles\cmTC_d7712.dir\src.cxx.obj
+cl : Ligne de commande warning D9002 : option '-fopenmp' inconnue ignorée
+[2/2] Linking CXX executable cmTC_d7712.exe
+
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: D:/COURS/Moteur 3D/perso/out/build/x64-Release/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_f25eb && [1/2] Building CXX object CMakeFiles\cmTC_f25eb.dir\src.cxx.obj
+FAILED: CMakeFiles/cmTC_f25eb.dir/src.cxx.obj 
+C:\PROGRA~1\MICROS~4\2022\COMMUN~1\VC\Tools\MSVC\1430~1.307\bin\Hostx64\x64\cl.exe  /nologo /TP -Dflag_supported  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wall  /MDd /Zi /Ob0 /Od /RTC1   -Wextra /showIncludes /FoCMakeFiles\cmTC_f25eb.dir\src.cxx.obj /FdCMakeFiles\cmTC_f25eb.dir\ /FS -c "D:\COURS\Moteur 3D\perso\out\build\x64-Release\CMakeFiles\CMakeTmp\src.cxx"
+cl : Ligne de commande error D8021 : argument numérique non valide '/Wextra'
+ninja: build stopped: subcommand failed.
+
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: D:/COURS/Moteur 3D/perso/out/build/x64-Release/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_789a4 && [1/2] Building CXX object CMakeFiles\cmTC_789a4.dir\src.cxx.obj
+cl : Ligne de commande warning D9002 : option '-pedantic' inconnue ignorée
+[2/2] Linking CXX executable cmTC_789a4.exe
+
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: D:/COURS/Moteur 3D/perso/out/build/x64-Release/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_4c4bf && [1/2] Building CXX object CMakeFiles\cmTC_4c4bf.dir\src.cxx.obj
+cl : Ligne de commande warning D9002 : option '-std=c++14' inconnue ignorée
+[2/2] Linking CXX executable cmTC_4c4bf.exe
+
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: D:/COURS/Moteur 3D/perso/out/build/x64-Release/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_c0a6e && [1/2] Building CXX object CMakeFiles\cmTC_c0a6e.dir\src.cxx.obj
+cl : Ligne de commande warning D9002 : option '-O3' inconnue ignorée
+[2/2] Linking CXX executable cmTC_c0a6e.exe
+
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: D:/COURS/Moteur 3D/perso/out/build/x64-Release/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_e3a96 && [1/2] Building CXX object CMakeFiles\cmTC_e3a96.dir\src.cxx.obj
+cl : Ligne de commande warning D9002 : option '-fopenmp' inconnue ignorée
+[2/2] Linking CXX executable cmTC_e3a96.exe
+
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: D:/COURS/Moteur 3D/perso/out/build/x64-Release/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_8d633 && [1/2] Building CXX object CMakeFiles\cmTC_8d633.dir\src.cxx.obj
+FAILED: CMakeFiles/cmTC_8d633.dir/src.cxx.obj 
+C:\PROGRA~1\MICROS~4\2022\COMMUN~1\VC\Tools\MSVC\1430~1.307\bin\Hostx64\x64\cl.exe  /nologo /TP -Dflag_supported  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wall  /MDd /Zi /Ob0 /Od /RTC1   -Wextra /showIncludes /FoCMakeFiles\cmTC_8d633.dir\src.cxx.obj /FdCMakeFiles\cmTC_8d633.dir\ /FS -c "D:\COURS\Moteur 3D\perso\out\build\x64-Release\CMakeFiles\CMakeTmp\src.cxx"
+cl : Ligne de commande error D8021 : argument numérique non valide '/Wextra'
+ninja: build stopped: subcommand failed.
+
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: D:/COURS/Moteur 3D/perso/out/build/x64-Release/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_61bb6 && [1/2] Building CXX object CMakeFiles\cmTC_61bb6.dir\src.cxx.obj
+cl : Ligne de commande warning D9002 : option '-pedantic' inconnue ignorée
+[2/2] Linking CXX executable cmTC_61bb6.exe
+
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: D:/COURS/Moteur 3D/perso/out/build/x64-Release/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_37ff8 && [1/2] Building CXX object CMakeFiles\cmTC_37ff8.dir\src.cxx.obj
+cl : Ligne de commande warning D9002 : option '-std=c++14' inconnue ignorée
+[2/2] Linking CXX executable cmTC_37ff8.exe
+
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: D:/COURS/Moteur 3D/perso/out/build/x64-Release/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_083c7 && [1/2] Building CXX object CMakeFiles\cmTC_083c7.dir\src.cxx.obj
+cl : Ligne de commande warning D9002 : option '-O3' inconnue ignorée
+[2/2] Linking CXX executable cmTC_083c7.exe
+
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: D:/COURS/Moteur 3D/perso/out/build/x64-Release/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_1bef6 && [1/2] Building CXX object CMakeFiles\cmTC_1bef6.dir\src.cxx.obj
+cl : Ligne de commande warning D9002 : option '-fopenmp' inconnue ignorée
+[2/2] Linking CXX executable cmTC_1bef6.exe
+
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: D:/COURS/Moteur 3D/perso/out/build/x64-Release/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_3e61d && [1/2] Building CXX object CMakeFiles\cmTC_3e61d.dir\src.cxx.obj
+FAILED: CMakeFiles/cmTC_3e61d.dir/src.cxx.obj 
+C:\PROGRA~1\MICROS~4\2022\COMMUN~1\VC\Tools\MSVC\1430~1.307\bin\Hostx64\x64\cl.exe  /nologo /TP -Dflag_supported  /DWIN32 /D_WINDOWS /W3 /GR /EHsc -Wall  /MDd /Zi /Ob0 /Od /RTC1   -Wextra /showIncludes /FoCMakeFiles\cmTC_3e61d.dir\src.cxx.obj /FdCMakeFiles\cmTC_3e61d.dir\ /FS -c "D:\COURS\Moteur 3D\perso\out\build\x64-Release\CMakeFiles\CMakeTmp\src.cxx"
+cl : Ligne de commande error D8021 : argument numérique non valide '/Wextra'
+ninja: build stopped: subcommand failed.
+
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: D:/COURS/Moteur 3D/perso/out/build/x64-Release/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_ea786 && [1/2] Building CXX object CMakeFiles\cmTC_ea786.dir\src.cxx.obj
+cl : Ligne de commande warning D9002 : option '-pedantic' inconnue ignorée
+[2/2] Linking CXX executable cmTC_ea786.exe
+
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: D:/COURS/Moteur 3D/perso/out/build/x64-Release/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_37c78 && [1/2] Building CXX object CMakeFiles\cmTC_37c78.dir\src.cxx.obj
+cl : Ligne de commande warning D9002 : option '-std=c++14' inconnue ignorée
+[2/2] Linking CXX executable cmTC_37c78.exe
+
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: D:/COURS/Moteur 3D/perso/out/build/x64-Release/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_5f035 && [1/2] Building CXX object CMakeFiles\cmTC_5f035.dir\src.cxx.obj
+cl : Ligne de commande warning D9002 : option '-O3' inconnue ignorée
+[2/2] Linking CXX executable cmTC_5f035.exe
+
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test flag_supported failed with the following output:
+Change Dir: D:/COURS/Moteur 3D/perso/out/build/x64-Release/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_6697d && [1/2] Building CXX object CMakeFiles\cmTC_6697d.dir\src.cxx.obj
+cl : Ligne de commande warning D9002 : option '-fopenmp' inconnue ignorée
+[2/2] Linking CXX executable cmTC_6697d.exe
+
+
+Source file was:
+int main() { return 0; }

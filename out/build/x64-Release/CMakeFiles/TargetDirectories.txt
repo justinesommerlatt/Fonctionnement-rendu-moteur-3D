@@ -1,0 +1,3 @@
+D:/COURS/Moteur 3D/perso/out/build/x64-Release/CMakeFiles/tinyrenderer.dir
+D:/COURS/Moteur 3D/perso/out/build/x64-Release/CMakeFiles/edit_cache.dir
+D:/COURS/Moteur 3D/perso/out/build/x64-Release/CMakeFiles/rebuild_cache.dir
