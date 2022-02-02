@@ -81,8 +81,8 @@ Vec2i barycentre(Vec2i s1, Vec2i s2, Vec2i s3){
 * s1p : s1' 
 * s2p : s2'
 * s3p : s3'
-*/ 
-Vec3f barycentric(Vec2i s1, Vec2i s2, Vec2i s3, Vec2i bp){
+*/
+Vec3f barycentric(Vec3f s1, Vec3f s2, Vec3f s3, Vec3f bp){
 
     double total_height = s3.y - s1.y;
     double total_area = 1/2 * (s3.x * (s2.y - s1.y) + s2.x * (s1.y - s3.y) + s1.x * (s3.y - s2.y));
@@ -99,7 +99,6 @@ Vec3f barycentric(Vec2i s1, Vec2i s2, Vec2i s3, Vec2i bp){
     
 }
 
-
 /*
 * void triangle
 * entrées
@@ -108,7 +107,7 @@ Vec3f barycentric(Vec2i s1, Vec2i s2, Vec2i s3, Vec2i bp){
 * s3 : troisième sommet du triangle
 * &image : 
 * color : couleur du triangle
-*/
+*
 void triangle(Vec2i s1, Vec2i s2, Vec2i s3, TGAImage &image, TGAColor color) {
     //si les trois coordonnées y sont égales alors il ne s'agit plus d'un triangle mais d'un segment
     if (s1.y==s2.y && s1.y==s3.y) return; 
@@ -155,112 +154,75 @@ void triangle(Vec2i s1, Vec2i s2, Vec2i s3, TGAImage &image, TGAColor color) {
            
         }
     }
+}*/
+void triangle(Vec3f *pts, float *zbuffer, TGAImage &image, TGAColor color) {
+    Vec2f bboxmin( std::numeric_limits<float>::max(),  std::numeric_limits<float>::max());
+    Vec2f bboxmax(-std::numeric_limits<float>::max(), -std::numeric_limits<float>::max());
+    Vec2f clamp(image.get_width()-1, image.get_height()-1);
+    for (int i=0; i<3; i++) {
+        for (int j=0; j<2; j++) {
+            bboxmin[j] = std::max(0.f,      std::min(bboxmin[j], pts[i][j]));
+            bboxmax[j] = std::min(clamp[j], std::max(bboxmax[j], pts[i][j]));
+        }
+    }
+    Vec3f P;
+    for (P.x=bboxmin.x; P.x<=bboxmax.x; P.x++) {
+        for (P.y=bboxmin.y; P.y<=bboxmax.y; P.y++) {
+            Vec3f bc_screen  = barycentric(pts[0], pts[1], pts[2], P);
+            if (bc_screen.x<0 || bc_screen.y<0 || bc_screen.z<0) continue;
+            P.z = 0;
+            for (int i=0; i<3; i++) P.z += pts[i][2]*bc_screen[i];
+            if (zbuffer[int(P.x+P.y*width)]<P.z) {
+                zbuffer[int(P.x+P.y*width)] = P.z;
+                image.set(P.x, P.y, color);
+            }
+        }
+    }
 }
 
 
+Vec3f world2screen(Vec3f v) {
+    return Vec3f(int((v.x+1.)*width/2.+.5), int((v.y+1.)*height/2.+.5), v.z);
+}
 
+float CompareZ(Vec3f vect[]){
+    return (vect[0].z + vect[1].z + vect[2].z)/3;
+}
 
-int main(int argc, char const *argv[])
-{
-     if (2==argc) {
+bool compareV(Vec3f v1[], Vec3f v2[]){
+  return (v1[0].z + v1[1].z + v1[2].z)/3 > (v2[0].z + v2[1].z + v2[2].z)/3;
+}
+
+int main(int argc, char** argv) {
+    if (2==argc) {
         model = new Model(argv[1]);
     } else {
-        //dans les lignes de commande si je mets uniquement ./tinyrenderer, on appelle quand même african_head comme objet
-        model = new Model("obj/african_head.obj");
+        model = new Model("obj/african_head/african_head.obj");
     }
 
+    float *zbuffer = new float[width*height];
+    for (int i=width*height; i--; zbuffer[i] = -std::numeric_limits<float>::max());
 
     TGAImage image(width, height, TGAImage::RGB);
-    Vec3f light_dir(0,0,-1);
+
+    std::vector<Vec3f[3]> vec_triangles ;
+
     for (int i=0; i<model->nfaces(); i++) {
         std::vector<int> face = model->face(i);
-        Vec2i screen_coords[3];
-        Vec3f world_coords[3];
-        for (int j=0; j<3; j++) {
-            Vec3f v = model->vert(face[j]);
-            screen_coords[j] = Vec2i((v.x+1.)*width/2., (v.y+1.)*height/2.);
-            world_coords[j]  = v;
-        }
-        Vec3f n = (world_coords[2]-world_coords[0])^(world_coords[1]-world_coords[0]);
-        n.normalize();
-        float intensity = n*light_dir;
-        if (intensity>0) {
-            //pour avoir le portrait d'une même couleur
-            triangle(screen_coords[0], screen_coords[1], screen_coords[2], image, TGAColor(intensity*55, intensity*89, intensity*99, 255));
-            /*pour mettre la texture sur le visage, il va falloir interpoler les coordonnées 
-            de texture des sommets des triangles, les multiplier par largeur-hauteur de l'image de texture
-            ce qui nous donnera la couleur à retourner 
-            */
-            triangle(screen_coords[0], screen_coords[1], screen_coords[2], image, TGAColor(intensity*55, intensity*89, intensity*99, 255));
+        Vec3f pts[3];
+        for (int i=0; i<3; i++) pts[i] = world2screen(model->vert(face[i]));
 
-        }
+        vec_triangles.push_back(pts);
+        //triangle(pts, zbuffer, image, TGAColor(rand()%255, rand()%255, rand()%255, 255));
     }
 
-    /*pour avoir l'origine en bas à gauche MAIS retourne l'image
-    image.flip_vertically(); */
+    std::sort(vec_triangles.begin(), vec_triangles.end(), compareV);
+    for (int i=0; i<vec_triangles.size(); i++){
+         triangle(vec_triangles[i], zbuffer, image, TGAColor(rand()%255, rand()%255, rand()%255, 255));
+    }
 
+    image.flip_vertically(); // i want to have the origin at the left bottom corner of the image
     image.write_tga_file("output.tga");
     delete model;
-
-    /*
-    if (argc < 2) {
-        std::cerr << "Usage " << argv[0] << " model.obj" << std::endl;
-    }
-    std::vector<float> pts;
-    std::vector<int> tri;
-    {
-        std::ifstream in;
-        in.open(argv[1], std::ifstream::in);
-        if (in.fail()) {
-            std::cerr << "Failed to open " << argv[1] << std::endl;
-            return -1;
-        }
-        std::string line;
-        char trash;
-        while (!in.eof()) {
-            std::getline(in, line);
-            std::istringstream iss(line.c_str());
-            if (!line.compare(0, 2, "v ")) {
-                iss >> trash;
-                for (int i : {0, 1, 2}) {
-                    float v;
-                    iss >> v;
-                    pts.push_back(v);
-                }
-            }
-            if (!line.compare(0, 2, "f ")) {
-                iss >> trash;
-                int f, t, n;
-                while (iss >> f >> trash >> t >> trash >> n) {
-                    tri.push_back(f-1);
-                }
-            }
-        }
-        in.close();
-    }
-
-    int nverts = pts.size() / 3;
-    int ntri = tri.size() / 3;
-    
-    TGAImage framebuffer(width, height, TGAImage::RGB);
-
-    /*CODE POUR DESSINER EN FILS DE FER
-    for (int t = 0; t < ntri; t++)
-    {
-        for (int s : { 0,1,2 })
-        {
-            int u = tri[t * 3 + s];
-            int v = tri[t * 3 + (s + 1) % 3];
-            int x0 = (pts[u * 3 + 0] + 1) / 2 * width;
-            int y0 = (pts[u * 3 + 1] + 1) / 2 * height;
-            int x1 = (pts[v * 3 + 0] + 1) / 2 * width;
-            int y1 = (pts[v * 3 + 1] + 1) / 2 * height;
-            //tracer une ligne : 
-            line(x0, y0, x1, y1, framebuffer);
-        }
-    }
-    //FIN CODE POUR DESSINER EN FILS DE FER
-    
-    framebuffer.write_tga_file("framebuffer.tga");*/
     return 0;
 }
