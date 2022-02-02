@@ -6,4 +6,6 @@ Sources utilisées lors de ce projet :
 - https://github.com/ssloy
 - https://fr.wikihow.com/calculer-le-centre-de-gravit%C3%A9-d%27un-triangle
 - https://codeplea.com/triangular-interpolation
+- http://villemin.gerard.free.fr/GeomLAV/Triangle/Remarqua/Barycent.htm
+- 
 
