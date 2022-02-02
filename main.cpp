@@ -185,7 +185,10 @@ Vec3f world2screen(Vec3f v) {
     return Vec3f(int((v.x+1.)*width/2.+.5), int((v.y+1.)*height/2.+.5), v.z);
 }
 
-float CompareZ(Vec3f vect[]){
+/* compareZ
+* je souhaite calculer la "moyenne" des coordonnées z afin d'ensuite pouvoir les trier
+*/ 
+float compareZ(Vec3f vect[]){
     return (vect[0].z + vect[1].z + vect[2].z)/3;
 }
 
@@ -205,17 +208,21 @@ int main(int argc, char** argv) {
 
     TGAImage image(width, height, TGAImage::RGB);
 
+    // un vecteur qui va contenir tous mes triangles
     std::vector<Vec3f[3]> vec_triangles ;
 
     for (int i=0; i<model->nfaces(); i++) {
         std::vector<int> face = model->face(i);
+        
         Vec3f pts[3];
         for (int i=0; i<3; i++) pts[i] = world2screen(model->vert(face[i]));
 
+        //je mets dans mon vecteur tous les triangles
         vec_triangles.push_back(pts);
         //triangle(pts, zbuffer, image, TGAColor(rand()%255, rand()%255, rand()%255, 255));
     }
 
+    // je trie mes triangles dans mon vecteur en fonction de la moyenne de leurs z afin de les traiter du plus profond au plus avancé et "superposer"
     std::sort(vec_triangles.begin(), vec_triangles.end(), compareV);
     for (int i=0; i<vec_triangles.size(); i++){
          triangle(vec_triangles[i], zbuffer, image, TGAColor(rand()%255, rand()%255, rand()%255, 255));
