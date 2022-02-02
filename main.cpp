@@ -59,11 +59,11 @@ void line(int x0, int y0, int x1, int y1, TGAImage &img)
 * - moyenne des coordonnées
 * Dans ce cas présent, calculer la moyenne des coordonnées se révèle être bien plus simple  
 */
-Vec3f barycentre(Vec3f s1, Vec3f s2, Vec3f s3){
+Vec2i barycentre(Vec2i s1, Vec2i s2, Vec2i s3){
     float x_center = (s1.x + s2.x + s3.x)/3;
     float y_center = (s1.y + s2.y + s3.y)/3;
-    float z_center = (s1.z + s2.z + s3.z)/3;
-    return Vec3f(x_center, y_center, z_center);
+    //float z_center = (s1.z + s2.z + s3.z)/3;
+    return Vec2i(x_center, y_center);
 
 }
 
@@ -77,12 +77,12 @@ Vec3f barycentre(Vec3f s1, Vec3f s2, Vec3f s3){
 * s1 : sommet 1
 * s2 : sommet 2
 * s3 : sommet 3
-* bp : barycentre point
+* bp : point dont on calcule les coordonnées barycentriques
 * s1p : s1' 
 * s2p : s2'
 * s3p : s3'
 */ 
-Vec3f barycentric(Vec3f s1, Vec3f s2, Vec3f s3, Vec3f bp){
+Vec3f barycentric(Vec2i s1, Vec2i s2, Vec2i s3, Vec2i bp){
 
     double total_height = s3.y - s1.y;
     double total_area = 1/2 * (s3.x * (s2.y - s1.y) + s2.x * (s1.y - s3.y) + s1.x * (s3.y - s2.y));
@@ -119,7 +119,8 @@ void triangle(Vec2i s1, Vec2i s2, Vec2i s3, TGAImage &image, TGAColor color) {
     //avec les swaps, on fait en sorte que le sommet s3 soit le sommet le plus "haut" et s1 le sommet le plus bas
     int total_height = s3.y-s1.y; 
 
-    
+
+
     for (int i=0; i<total_height; i++) {
         // on coupe le triangle en deux sous triangles et on regarde si on est dans la deuxième moitié (=triangle supérieur)
         bool second_half = i>s2.y-s1.y || s2.y==s1.y;
@@ -136,14 +137,22 @@ void triangle(Vec2i s1, Vec2i s2, Vec2i s3, TGAImage &image, TGAColor color) {
         // afin d'obtenir la hauteur de i relative dans le triangle courant
         float beta  = (float)(i-(second_half ? s2.y-s1.y : 0))/segment_height; 
 
-        // s3-s1 : vecteur allantr de s3 à s1
+        // s3-s1 : vecteur allant de s3 à s1
         // alpha : hauteur relative de i 
         Vec2i A =               s1 + (s3-s1)*alpha;
         Vec2i B = second_half ? s2 + (s3-s2)*beta : s1 + (s2-s1)*beta;
           
         if (A.x>B.x) std::swap(A, B);
         for (int j=A.x; j<=B.x; j++) {
-            image.set(j, s1.y+i, color); 
+            
+            Vec3f pt=barycentric(s1, s2, s3, Vec2i(j,i));
+            if (pt.x <0 || pt.y < 0 || pt.z < 0){ 
+                continue;
+            }
+            else{
+                image.set(j, s1.y+i, color); 
+            }
+           
         }
     }
 }
@@ -186,8 +195,8 @@ int main(int argc, char const *argv[])
         }
     }
 
-    //pour avoir l'origine en bas à gauche MAIS retourne l'image
-    //image.flip_vertically(); 
+    /*pour avoir l'origine en bas à gauche MAIS retourne l'image
+    image.flip_vertically(); */
 
     image.write_tga_file("output.tga");
     delete model;
@@ -233,23 +242,6 @@ int main(int argc, char const *argv[])
     int ntri = tri.size() / 3;
     
     TGAImage framebuffer(width, height, TGAImage::RGB);
-
-    //Triangle
-    //triangle(vec2d(25, 25), vec2d(50, 175), vec2d(350, 854), framebuffer);
-
-    /*for (int i = 0; i < ntri; i++)
-    {
-        for (int s : {0, 1, 2}) {
-            int aPos = tri[i * 3 + s];
-            int bPos = tri[i * 3 + (s + 1) % 3];
-            int cPos = tri[i * 3 + (s + 2) % 3];
-            vec2d a((tri[aPos * 3 + 0] + 1) / 2 * width, (tri[aPos * 3 + 1] + 1) / 2 * height);
-            vec2d b((tri[bPos * 3 + 0] + 1) / 2 * width, (tri[bPos * 3 + 1] + 1) / 2 * height);
-            vec2d c((tri[cPos * 3 + 0] + 1) / 2 * width, (tri[cPos * 3 + 1] + 1) / 2 * height);
-            triangle(a, b, c, framebuffer);
-        }
-    }*/
-
 
     /*CODE POUR DESSINER EN FILS DE FER
     for (int t = 0; t < ntri; t++)
