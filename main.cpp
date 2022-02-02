@@ -159,6 +159,7 @@ void triangle(Vec2i s1, Vec2i s2, Vec2i s3, TGAImage &image, TGAColor color) {
 
 
 
+
 int main(int argc, char const *argv[])
 {
      if (2==argc) {
