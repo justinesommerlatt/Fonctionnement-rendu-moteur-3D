@@ -10,8 +10,8 @@
 #include <cmath>
 
 
-constexpr int width = 1024;
-constexpr int height = 1024;
+const int width = 1024;
+const int height = 1024;
 const TGAColor green = TGAColor(0,   255, 0,   255);
 Model *model = NULL;
 
@@ -67,6 +67,38 @@ Vec3f barycentre(Vec3f s1, Vec3f s2, Vec3f s3){
 
 }
 
+/*
+* Calculer les coordonnées barycentriques 
+* Pour cela, il nous faut calculer 4 aires de triangles (le grand triangles ainsi que les trois sous triangles qui le forment)
+* Puisque la somme des coordonées vaut 1, il nous suffit de calculer deux coordonnées pour connaitre la troisième, soit : 
+* c' = 1 - a' - b'
+* Aire d'un triangle = H*b /2
+* Aire d'un triangles à l'aide des coordonnées = 1/2 (s1.x(s2.Y - s3.y) + s2.x(s3.y - s1;Y) + s3.x(s1.y - s2.y))
+* s1 : sommet 1
+* s2 : sommet 2
+* s3 : sommet 3
+* bp : barycentre point
+* s1p : s1' 
+* s2p : s2'
+* s3p : s3'
+*/ 
+Vec3f barycentric(Vec3f s1, Vec3f s2, Vec3f s3, Vec3f bp){
+
+    double total_height = s3.y - s1.y;
+    double total_area = 1/2 * (s3.x * (s2.y - s1.y) + s2.x * (s1.y - s3.y) + s1.x * (s3.y - s2.y));
+    double area_triangle1 = 1/2 * (s3.x * (s2.y - bp.y) + s2.x * (bp.y - s3.y) + bp.x * (s3.y - s2.y));
+    double area_triangle2 = 1/2 * (s3.x * (bp.y - s1.y) + bp.x * (s1.y - s3.y) + s1.x * (s3.y - bp.y));
+    double area_triangle3 = 1/2 * (bp.x * (s2.y - s1.y) + s2.x * (s1.y - bp.y) + s1.x * (bp.y - s2.y));
+    double s1p = area_triangle1 / total_area;
+    double s2p = area_triangle2 / total_area;
+    double s3p = area_triangle3 / total_area;
+    // je choisis de calculer les trois aires afin de vérifier mes calculs
+    if (s1p + s2p + s3p == 1){
+        return Vec3f(s1p, s2p, s3p);
+    }
+    
+}
+
 
 /*
 * void triangle
@@ -118,7 +150,7 @@ void triangle(Vec2i s1, Vec2i s2, Vec2i s3, TGAImage &image, TGAColor color) {
 
 
 
-int main([[maybe_unused]]int argc, [[maybe_unused]]char const *argv[])
+int main(int argc, char const *argv[])
 {
      if (2==argc) {
         model = new Model(argv[1]);
