@@ -15,6 +15,7 @@ const int width = 1024;
 const int height = 1024;
 const TGAColor green = TGAColor(0,   255, 0,   255);
 Model *model = NULL;
+TGAImage tex;
 
 void line(int x0, int y0, int x1, int y1, TGAImage &img)
 {
@@ -96,63 +97,7 @@ Vec3f barycentric(Vec2f s1, Vec2f s2, Vec2f s3, Vec2f bp){
     return {static_cast<float>(a/total_area),static_cast<float>(b/total_area),static_cast<float>(c/total_area)};
 }
 
-/*
-* void triangle
-* entrÃ©es
-* s1 : premier sommet du triangle
-* s2 : deuxiÃ¨me sommet du triangle
-* s3 : troisiÃ¨me sommet du triangle
-* &image : 
-* color : couleur du triangle
-*
-void triangle(Vec2i s1, Vec2i s2, Vec2i s3, TGAImage &image, TGAColor color) {
-    //si les trois coordonnÃ©es y sont Ã©gales alors il ne s'agit plus d'un triangle mais d'un segment
-    if (s1.y==s2.y && s1.y==s3.y) return; 
-    if (s1.y>s2.y) std::swap(s1, s2);
-    if (s1.y>s3.y) std::swap(s1, s3);
-    if (s2.y>s3.y) std::swap(s2, s3);
-
-    //avec les swaps, on fait en sorte que le sommet s3 soit le sommet le plus "haut" et s1 le sommet le plus bas
-    int total_height = s3.y-s1.y; 
-
-
-
-    for (int i=0; i<total_height; i++) {
-        // on coupe le triangle en deux sous triangles et on regarde si on est dans la deuxiÃ¨me moitiÃ© (=triangle supÃ©rieur)
-        bool second_half = i>s2.y-s1.y || s2.y==s1.y;
-
-        // puisque le sommet s3 est le plus haut et le sommet s1 le plus bas, 
-        // la hauteur de notre sous triangle vaut soit s3.y-s2.y si on se trouve dans le triangle supÃ©rieur
-        // soit s2.y-s1.y si on se trouve dans le triangle infÃ©rieur
-        int segment_height = second_half ? s3.y-s2.y : s2.y-s1.y;
-
-        // hauteur relative de i dans le triangle courant
-        float alpha = (float)i/total_height;
-
-        // si on se trouve dans le triangle supÃ©rieur alors on "supprime" le triangle infÃ©rieur (si on se trouve dans le triangle infÃ©rieur alors on n'enlÃ¨ve rien),
-        // afin d'obtenir la hauteur de i relative dans le triangle courant
-        float beta  = (float)(i-(second_half ? s2.y-s1.y : 0))/segment_height; 
-
-        // s3-s1 : vecteur allant de s3 Ã  s1
-        // alpha : hauteur relative de i 
-        Vec2i A =               s1 + (s3-s1)*alpha;
-        Vec2i B = second_half ? s2 + (s3-s2)*beta : s1 + (s2-s1)*beta;
-          
-        if (A.x>B.x) std::swap(A, B);
-        for (int j=A.x; j<=B.x; j++) {
-            
-            Vec3f pt=barycentric(s1, s2, s3, Vec2i(j,i));
-            if (pt.x <0 || pt.y < 0 || pt.z < 0){ 
-                continue;
-            }
-            else{
-                image.set(j, s1.y+i, color); 
-            }
-           
-        }
-    }
-}*/
-void triangle(std::array<Vec3f,3> pts, float *zbuffer, TGAImage &image, TGAColor color) {
+void triangle(std::array<Vec3f,3> pts, std::array<Vec2f,3> pts2, float *zbuffer, TGAImage &image, TGAColor color) {
     Vec2f bboxmin( std::numeric_limits<float>::max(),  std::numeric_limits<float>::max());
     Vec2f bboxmax(-std::numeric_limits<float>::max(), -std::numeric_limits<float>::max());
     Vec2f clamp(image.get_width()-1, image.get_height()-1);
@@ -167,6 +112,9 @@ void triangle(std::array<Vec3f,3> pts, float *zbuffer, TGAImage &image, TGAColor
             Vec3f bc_screen  = barycentric(Vec2f{pts[0].x, pts[0].y}, Vec2f{pts[1].x, pts[1].y}, Vec2f{pts[2].x, pts[2].y}, Vec2f{static_cast<float>(x), static_cast<float>(y)});
             if (bc_screen.x<0 || bc_screen.y<0 || bc_screen.z<0) continue;
             double z = pts[0].z * bc_screen[0] + pts[1].z * bc_screen[1] + pts[2].z * bc_screen[2];
+            Vec2f uv = pts2[0] * bc_screen[0] + pts2[1] * bc_screen[1] + pts2[2] * bc_screen[2];
+      //      std::cerr << pts2[0] << std::endl;
+            color = tex.get(uv.x*tex.get_width(), uv.y*tex.get_height());
             if (zbuffer[int(x+y*width)]>z) continue;
             zbuffer[int(x+y*width)] = z;
             image.set(x, y, color);
@@ -180,7 +128,7 @@ Vec3f world2screen(Vec3f v) {
 }
 
 /* compareZ
-* je souhaite calculer la "moyenne" des coordonnÃ©es z afin d'ensuite pouvoir les trier
+* je souhaite calculer la "moyenne" des coordonnees z afin d'ensuite pouvoir les trier
 */ 
 float compareZ(Vec3f vect[]){
     return (vect[0].z + vect[1].z + vect[2].z)/3;
@@ -196,6 +144,18 @@ int main(int argc, char** argv) {
     } else {
         model = new Model("obj/african_head/african_head.obj");
     }
+tex.read_tga_file("../obj/african_head/african_head_diffuse.tga");
+tex.flip_vertically();
+    
+
+
+
+
+
+
+
+
+
 
     float *zbuffer = new float[width*height];
     for (int i=width*height; i--; zbuffer[i] = -std::numeric_limits<float>::max());
@@ -213,16 +173,19 @@ int main(int argc, char** argv) {
 
         //je mets dans mon vecteur tous les triangles
         vec_triangles.push_back(pts);
-        //triangle(pts, zbuffer, image, TGAColor(rand()%255, rand()%255, rand()%255, 255));
     }
 
-    // je trie mes triangles dans mon vecteur en fonction de la moyenne de leurs z afin de les traiter du plus profond au plus avancÃ© et "superposer"
-//  std::sort(vec_triangles.begin(), vec_triangles.end(), compareV);
+    
     for (int i=0; i<vec_triangles.size(); i++){
-         triangle(vec_triangles[i], zbuffer, image, TGAColor(rand()%255, rand()%255, rand()%255, 255));
+      std::array<Vec2f, 3> uvs = {model->vertdimtwo(model->facedimtwo(i)[0]), model->vertdimtwo(model->facedimtwo(i)[1]), model->vertdimtwo(model->facedimtwo(i)[2])};
+      
+         triangle(vec_triangles[i], uvs, zbuffer, image, TGAColor(rand()%255, rand()%255, rand()%255, 255));
     }
 
-//  image.flip_vertically(); // i want to have the origin at the left bottom corner of the image
+    //Fonction pour tourner l'image verticalement 
+    image.flip_vertically(); 
+
+    //Fonction qui dessine l'image
     image.write_tga_file("output.tga");
     delete model;
     return 0;
