@@ -138,12 +138,6 @@ public:
         for (size_t i=DimRows; i--; rows[i][idx]=v[i]);
     }
 
-    static mat<DimRows,DimCols,T> identity() {
-        mat<DimRows,DimCols,T> ret;
-        for (size_t i=DimRows; i--; )
-            for (size_t j=DimCols;j--; ret[i][j]=(i==j));
-        return ret;
-    }
 
     T det() const {
         return dt<DimCols,T>::det(*this);
@@ -173,15 +167,6 @@ public:
         return ret/tmp;
     }
 
-    mat<DimRows,DimCols,T> invert() {
-        return invert_transpose().transpose();
-    }
-
-    mat<DimCols,DimRows,T> transpose() {
-        mat<DimCols,DimRows,T> ret;
-        for (size_t i=DimCols; i--; ret[i]=this->col(i));
-        return ret;
-    }
 };
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -216,5 +201,28 @@ typedef vec<2,  int>   Vec2i;
 typedef vec<3,  float> Vec3f;
 typedef vec<3,  int>   Vec3i;
 typedef vec<4,  float> Vec4f;
-typedef mat<4,4,float> Matrix;
+
+/////////////////////////////////////////////////////////////////////////////////
+
+const int DEFAULT_ALLOC=4;
+
+class Matrix {
+    std::vector<std::vector<float> > m;
+    int rows, cols;
+public:
+    Matrix(int r=DEFAULT_ALLOC, int c=DEFAULT_ALLOC);
+    inline int nrows();
+    inline int ncols();
+
+    static Matrix identity(int dimensions);
+    std::vector<float>& operator[](const int i);
+    Matrix operator*(const Matrix& a);
+    Matrix transpose();
+    Matrix inverse();
+
+    friend std::ostream& operator<<(std::ostream& s, Matrix& m);
+};
+
+
 #endif //__GEOMETRY_H__
+

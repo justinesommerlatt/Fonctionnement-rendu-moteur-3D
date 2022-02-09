@@ -11,11 +11,15 @@
 #include <cmath>
 
 
-const int width = 1024;
-const int height = 1024;
+const int width  = 800;
+const int height = 800;
 const TGAColor green = TGAColor(0,   255, 0,   255);
 Model *model = NULL;
 TGAImage tex;
+int *zbuffer = NULL;
+Vec3f light_dir(0,0,-1);
+
+
 
 void line(int x0, int y0, int x1, int y1, TGAImage &img)
 {
@@ -144,18 +148,10 @@ int main(int argc, char** argv) {
     } else {
         model = new Model("obj/african_head/african_head.obj");
     }
-tex.read_tga_file("../obj/african_head/african_head_diffuse.tga");
-tex.flip_vertically();
+    tex.read_tga_file("../obj/african_head/african_head_diffuse.tga");
+    //je retourne verticalement ma texture (en + de mon objet)
+    tex.flip_vertically();
     
-
-
-
-
-
-
-
-
-
 
     float *zbuffer = new float[width*height];
     for (int i=width*height; i--; zbuffer[i] = -std::numeric_limits<float>::max());
@@ -167,10 +163,14 @@ tex.flip_vertically();
 
     for (int i=0; i<model->nfaces(); i++) {
         std::vector<int> face = model->face(i);
+        float c = 1/5.2;
         
         std::array<Vec3f,3> pts;
-        for (int i=0; i<3; i++) pts[i] = world2screen(model->vert(face[i]));
-
+        for (int i=0; i<3; i++) {
+            Vec3f v = model->vert(face[i]);
+            v = Vec3f{v.x/(1.f-v.z*c), v.y/(1.f-v.z*c), v.z/(1.f-v.z*c)};
+            pts[i] = world2screen(v);
+        }
         //je mets dans mon vecteur tous les triangles
         vec_triangles.push_back(pts);
     }
