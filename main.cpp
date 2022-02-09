@@ -163,11 +163,13 @@ int main(int argc, char** argv) {
 
     for (int i=0; i<model->nfaces(); i++) {
         std::vector<int> face = model->face(i);
+        //distance de la caméra
         float c = 1/5.2;
         
         std::array<Vec3f,3> pts;
         for (int i=0; i<3; i++) {
             Vec3f v = model->vert(face[i]);
+            //formule 3 fin de la leçon 4
             v = Vec3f{v.x/(1.f-v.z*c), v.y/(1.f-v.z*c), v.z/(1.f-v.z*c)};
             pts[i] = world2screen(v);
         }
