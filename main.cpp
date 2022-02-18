@@ -73,6 +73,10 @@ Vec2i barycentre(Vec2i s1, Vec2i s2, Vec2i s3){
 
 }
 
+/*
+Calcul de l'aire d'un triangle
+*/
+
 double triangle_area_2d(Vec2f a, Vec2f b, Vec2f c) {
     return .5*((b.y-a.y)*(b.x+a.x) + (c.y-b.y)*(c.x+b.x) + (a.y-c.y)*(a.x+c.x));
 }
@@ -87,10 +91,7 @@ double triangle_area_2d(Vec2f a, Vec2f b, Vec2f c) {
 * s1 : sommet 1
 * s2 : sommet 2
 * s3 : sommet 3
-* bp : point dont on calcule les coordonnÃ©es barycentriques
-* s1p : s1' 
-* s2p : s2'
-* s3p : s3'
+* bp : point dont on calcule les coordonnees barycentriques
 */
 Vec3f barycentric(Vec2f s1, Vec2f s2, Vec2f s3, Vec2f bp){
     double total_area = triangle_area_2d(s1, s2, s3);

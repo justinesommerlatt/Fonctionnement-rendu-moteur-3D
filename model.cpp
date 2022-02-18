@@ -37,6 +37,11 @@ Model::Model(const char *filename)  {
             }
             faces_.push_back(f);
             facesdimtwo_.push_back(g);
+        } else if (!line.compare(0, 2, "vn ")) {
+            iss >> trash;
+            Vec3f vn;
+            for (int i=0;i<3;i++) iss >> vn[i];
+            vertsnorm_.push_back(vn);
         }
     }
     std::cerr << "# v# " << verts_.size() << " f# "  << faces_.size() << std::endl;
@@ -47,6 +52,10 @@ Model::~Model() {
 
 int Model::nverts() {
     return (int)verts_.size();
+}
+
+int Model::nvertsnorm() {
+    return (int)vertsnorm_.size();
 }
 
 int Model::nfaces() {
@@ -63,6 +72,11 @@ Vec3f Model::vert(int i) {
 }
 Vec2f Model::vertdimtwo(int i) {
     return vertsdimtwo_[i];
+
+}
+
+Vec3f Model::vertsnorm(int i) {
+    return vertsnorm_[i];
 
 }
 std::vector<int> Model::facedimtwo(int idxdimtwo) {
