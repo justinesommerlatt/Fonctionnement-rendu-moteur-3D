@@ -25,21 +25,23 @@ Model::Model(const char *filename)  {
             for (int i=0;i<2;i++) iss >> v[i];
             vertsdimtwo_.push_back(v);
         } else if (!line.compare(0, 2, "f ")) {
-            std::vector<int> f;
-            std::vector<int> g;
-            int itrash, idx, idxdimtwo;
+            std::vector<int> f,g,h;
+            int itrash, idx, idxdimtwo,idxdimthree;
             iss >> trash;
-            while (iss >> idx >> trash >> idxdimtwo >> trash >> itrash) {
+            while (iss >> idx >> trash >> idxdimtwo >> trash >> idxdimthree) {
                 idx--; // tous les indices commencent à 1
                 idxdimtwo--;
+                idxdimthree--;
                 f.push_back(idx);
                 //je récupère les indices 2D
                 g.push_back(idxdimtwo);
+                h.push_back(idxdimthree);
             }
             faces_.push_back(f);
             facesdimtwo_.push_back(g);
-        } else if (!line.compare(0, 2, "vn ")) {
-            iss >> trash;
+            facesdimthree_.push_back(h);
+        } else if (!line.compare(0, 3, "vn ")) {
+            iss >> trash >> trash;
             Vec3f vn;
             for (int i=0;i<3;i++) iss >> vn[i];
             //je récupère les vecteurs normaux
@@ -81,6 +83,10 @@ Vec3f Model::vertsnorm(int i) {
     return vertsnorm_[i];
 
 }
+
 std::vector<int> Model::facedimtwo(int idxdimtwo) {
     return facesdimtwo_[idxdimtwo];
+}
+std::vector<int> Model::facedimthree(int idxdimtwo) {
+    return facesdimthree_[idxdimtwo];
 }

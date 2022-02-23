@@ -11,6 +11,7 @@ private:
 	std::vector<Vec2f> vertsdimtwo_ = {};
 	std::vector<std::vector<int> > faces_ = {};
 	std::vector<std::vector<int> > facesdimtwo_ = {};
+	std::vector<std::vector<int> > facesdimthree_ = {};
 public:
 	Model(const char *filename);
 	~Model();
@@ -23,6 +24,7 @@ public:
 
 	std::vector<int> face(int idx);
 	std::vector<int> facedimtwo(int idxdimtwo);
+	std::vector<int> facedimthree(int idxdimtwo);
 
 };
 

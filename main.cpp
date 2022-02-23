@@ -4,6 +4,7 @@
 #include "model.h"
 #include <array>
 #include <iostream>
+#include <algorithm>
 #include <fstream>
 #include <sstream>
 #include <limits>
@@ -20,7 +21,7 @@ int *zbuffer = NULL;
 Vec3f light_dir(0,0,-1);
 
 
-
+/*
 void lookat(Vec3f eye, Vec3f center, Vec3f up) {
     vec3 z = (center-eye).normalize();
     vec3 x =  cross(up,z).normalize();
@@ -35,6 +36,7 @@ void lookat(Vec3f eye, Vec3f center, Vec3f up) {
     }
     ModelView = Minv*Tr;
 }
+*/
 
 void line(int x0, int y0, int x1, int y1, TGAImage &img)
 {
@@ -117,7 +119,7 @@ Vec3f barycentric(Vec2f s1, Vec2f s2, Vec2f s3, Vec2f bp){
     return {static_cast<float>(a/total_area),static_cast<float>(b/total_area),static_cast<float>(c/total_area)};
 }
 
-void triangle(std::array<Vec3f,3> pts, std::array<Vec2f,3> pts2, float *zbuffer, TGAImage &image, TGAColor color) {
+void triangle(std::array<Vec3f,3> pts, std::array<Vec3f,3> nrm, std::array<Vec2f,3> pts2, float *zbuffer, TGAImage &image, TGAColor color) {
     Vec2f bboxmin( std::numeric_limits<float>::max(),  std::numeric_limits<float>::max());
     Vec2f bboxmax(-std::numeric_limits<float>::max(), -std::numeric_limits<float>::max());
     Vec2f clamp(image.get_width()-1, image.get_height()-1);
@@ -133,8 +135,13 @@ void triangle(std::array<Vec3f,3> pts, std::array<Vec2f,3> pts2, float *zbuffer,
             if (bc_screen.x<0 || bc_screen.y<0 || bc_screen.z<0) continue;
             double z = pts[0].z * bc_screen[0] + pts[1].z * bc_screen[1] + pts[2].z * bc_screen[2];
             Vec2f uv = pts2[0] * bc_screen[0] + pts2[1] * bc_screen[1] + pts2[2] * bc_screen[2];
+            Vec3f n = nrm[0] * bc_screen[0] + nrm[1] * bc_screen[1] + nrm[2] * bc_screen[2];
+            n.normalize();
+            Vec3f l = Vec3f{1,1,1}.normalize();
+            float intensity = std::max(0.f, n*l);
       //      std::cerr << pts2[0] << std::endl;
             color = tex.get(uv.x*tex.get_width(), uv.y*tex.get_height());
+            for (int chan : {0,1,2}) color[chan] *= intensity;
             if (zbuffer[int(x+y*width)]>z) continue;
             zbuffer[int(x+y*width)] = z;
             image.set(x, y, color);
@@ -177,6 +184,7 @@ int main(int argc, char** argv) {
 
     // un vecteur qui va contenir tous mes triangles
     std::vector<std::array<Vec3f, 3>> vec_triangles ;
+        float angle = M_PI/4;
 
     for (int i=0; i<model->nfaces(); i++) {
         std::vector<int> face = model->face(i);
@@ -184,11 +192,15 @@ int main(int argc, char** argv) {
         float c = 1/5.2;
         
         std::array<Vec3f,3> pts;
-        for (int i=0; i<3; i++) {
-            Vec3f v = model->vert(face[i]);
+        for (int j=0; j<3; j++) {
+            Vec3f v = model->vert(face[j]);
+            //je tourne de 90°
+            //v = Vec3f{v.z, v.y, -v.x};
+            //je tourne d'un certain angle
+            v = Vec3f{cos(angle)*v.x + sin(angle)*v.z, v.y, -sin(angle)*v.x + cos(angle)*v.z};
             //formule 3 fin de la leçon 4
             v = Vec3f{v.x/(1.f-v.z*c), v.y/(1.f-v.z*c), v.z/(1.f-v.z*c)};
-            pts[i] = world2screen(v);
+            pts[j] = world2screen(v);
         }
         //je mets dans mon vecteur tous les triangles
         vec_triangles.push_back(pts);
@@ -197,8 +209,16 @@ int main(int argc, char** argv) {
     
     for (int i=0; i<vec_triangles.size(); i++){
       std::array<Vec2f, 3> uvs = {model->vertdimtwo(model->facedimtwo(i)[0]), model->vertdimtwo(model->facedimtwo(i)[1]), model->vertdimtwo(model->facedimtwo(i)[2])};
-      
-         triangle(vec_triangles[i], uvs, zbuffer, image, TGAColor(rand()%255, rand()%255, rand()%255, 255));
+      std::array<Vec3f, 3> nrm = {model->vertsnorm(model->facedimthree(i)[0]), model->vertsnorm(model->facedimthree(i)[1]), model->vertsnorm(model->facedimthree(i)[2])};
+      for (int v : {0,1,2}) {
+            // je tourne de 90°
+            //nrm[v] = Vec3f{nrm[v].z, nrm[v].y, -nrm[v].x};
+            //je tourne d'un certain angle
+              nrm[v] = Vec3f{cos(angle)*nrm[v].x + sin(angle)*nrm[v].z, nrm[v].y, -sin(angle)*nrm[v].x + cos(angle)*nrm[v].z};
+
+   //      std::swap(nrm[v].x, nrm[v].z);
+      }
+         triangle(vec_triangles[i], nrm, uvs, zbuffer, image, TGAColor(rand()%255, rand()%255, rand()%255, 255));
     }
 
     //je tourne l'image verticalement 
