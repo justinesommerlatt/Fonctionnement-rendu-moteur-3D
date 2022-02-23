@@ -33,6 +33,7 @@ Model::Model(const char *filename)  {
                 idx--; // tous les indices commencent à 1
                 idxdimtwo--;
                 f.push_back(idx);
+                //je récupère les indices 2D
                 g.push_back(idxdimtwo);
             }
             faces_.push_back(f);
@@ -41,6 +42,7 @@ Model::Model(const char *filename)  {
             iss >> trash;
             Vec3f vn;
             for (int i=0;i<3;i++) iss >> vn[i];
+            //je récupère les vecteurs normaux
             vertsnorm_.push_back(vn);
         }
     }

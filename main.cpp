@@ -149,6 +149,7 @@ int main(int argc, char** argv) {
     } else {
         model = new Model("obj/african_head/african_head.obj");
     }
+    //je lis ma texture afin de l'appliquer sur mon objet
     tex.read_tga_file("../obj/african_head/african_head_diffuse.tga");
     //je retourne verticalement ma texture (en + de mon objet)
     tex.flip_vertically();
@@ -185,7 +186,7 @@ int main(int argc, char** argv) {
          triangle(vec_triangles[i], uvs, zbuffer, image, TGAColor(rand()%255, rand()%255, rand()%255, 255));
     }
 
-    //Fonction pour tourner l'image verticalement 
+    //je tourne l'image verticalement 
     image.flip_vertically(); 
 
     //Fonction qui dessine l'image
