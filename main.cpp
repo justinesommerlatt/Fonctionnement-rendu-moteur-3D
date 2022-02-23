@@ -21,6 +21,21 @@ Vec3f light_dir(0,0,-1);
 
 
 
+void lookat(Vec3f eye, Vec3f center, Vec3f up) {
+    vec3 z = (center-eye).normalize();
+    vec3 x =  cross(up,z).normalize();
+    vec3 y =  cross(z, x).normalize();
+    Matrix Minv = Matrix::identity();
+    Matrix Tr   = Matrix::identity();
+    for (int i=0; i<3; i++) {
+        Minv[0][i] = x[i];
+        Minv[1][i] = y[i];
+        Minv[2][i] = z[i];
+        Tr[i][3] = -center[i];
+    }
+    ModelView = Minv*Tr;
+}
+
 void line(int x0, int y0, int x1, int y1, TGAImage &img)
 {
     bool steep = std::abs(x0 - x1) < std::abs(y0 - y1);
